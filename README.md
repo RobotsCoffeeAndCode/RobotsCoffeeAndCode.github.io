@@ -1,1 +1,1 @@
-Hello, This is my Portfolio Website!
+Hello! My name is Nathaniel, and welcome to my portfolio!
