@@ -12,8 +12,8 @@ body {
   color: var(--text-color);
   background-color: var(--bg-color);
   margin: 0;
-  padding: 2rem 1rem;
-  max-width: 80vw;
+  padding: 1rem 0.5rem;
+  max-width: 95vw;
   margin-left: auto;
   margin-right: auto;
 }
