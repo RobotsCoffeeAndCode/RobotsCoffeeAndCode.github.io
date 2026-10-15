@@ -39,33 +39,97 @@
   <main>
     <section id="intro" class="tab-panel">
       <h2>Professional Self Assessment</h2>
-      <p>    As I have progressed through my final term at Southern New Hampshire University, I have had the opportunity to demonstrate the breadth and depth of my strengths as a software developer. To date, the program has focused on individual topics and the development of implementations that require limited testing and integration. For example, in CS-340 Client Server Development, we built a Python module that made four HTTP requests to an existing MongoDB instance to support all create, read, update, and delete (CRUD) operations. This experience was extremely valuable in helping me learn how to interact with application programming interfaces (APIs) and understand data schemas—skills that will likely contribute to my success in computer science. However, it demonstrated only one dimension of my programming capabilities. Competent programmers can implement a single idea or algorithm independently, but exceptional programmers can integrate multiple layers of ideas while maintaining a readable codebase for future developers. As I pursue a career as a professional programmer, I have learned that effective communication, well-organized code, and a passion for learning are essential. This portfolio represents my first professional contribution to my aspiring career in computer science.</p>
-      <p>    The objectives of this portfolio are to demonstrate proficiency in using a modern, industry-standard toolchain, sound design decision-making; the ability to justify the efficiency of selected algorithms, and the secure management of user data in a cloud database. It also illustrates how my development process aligns with professional standards for team collaboration, stakeholder communication, and security. The portfolio is organized according to the navigation tabs displayed above, arranged from left to right. It was developed individually, with a six-week deadline. This time constraint was primarily due to the course structure, which I discuss further in the concluding section of the portfolio. As software is rarely developed from scratch, this portfolio builds on one of my earliest projects at SNHU. It demonstrates how far I have progressed as a developer and my ability to work with code that I have not encountered in over a year.</p>
-      <p>    My work includes three enhancements to my IT145, Foundations in Application Development, Project Two submission. I completed this Java project during my first term at Southern New Hampshire University. It is a console application designed for internal use by a rescue animal company to track its inventory. In this context, a rescue animal is an animal trained to perform rescue work, such as locating a person who has gone missing on a ski trail. The application features a simple menu system and a list-based inventory of rescue animals. It allows users to view all rescue animals, their training statuses, and whether a third party has reserved them for a rescue. Users can also add rescue animals to the inventory or update the reservation status of an animal that is in service. I will express more details about the application in the following section, but essentially it is a bare-bones, local data management application.</p>
-      <p>    This artifact was selected because, although basic, it demonstrates the core functions required of effective software: robust user input and output with error handling, data structuring and storage, and algorithmic data manipulation. My three enhancements demonstrate my ability to build each core function. In addition, I changed the language that I wrote the original software in from Java to C++. I used clang-tidy throughout the development process to ensure security was never an afterthought. Lastly, I used CMake to statically link all libraries used within the application, ensuring that the binary runs on any Windows device after compilation.</p>
+
+      <p> As I have progressed through my final term at Southern New Hampshire University, I have had the opportunity to
+        demonstrate the breadth and depth of my strengths as a software developer. To date, the program has focused on
+        individual topics and the development of implementations that require limited testing and integration. For
+        example, in CS-340 Client Server Development, we built a Python module that made four HTTP requests to an
+        existing MongoDB instance to support all create, read, update, and delete (CRUD) operations. This experience was
+        extremely valuable in helping me learn how to interact with application programming interfaces (APIs) and
+        understand data schemas—skills that will likely contribute to my success in computer science. However, it
+        demonstrated only one dimension of my programming capabilities. Competent programmers can implement a single
+        idea or algorithm independently, but exceptional programmers can integrate multiple layers of ideas while
+        maintaining a readable codebase for future developers. As I pursue a career as a professional programmer, I have
+        learned that effective communication, well-organized code, and a passion for learning are essential. This
+        portfolio represents my first professional contribution to my aspiring career in computer science.</p>
+
+      <p> The objectives of this portfolio are to demonstrate proficiency in using a modern, industry-standard
+        toolchain, sound design decision-making; the ability to justify the efficiency of selected algorithms, and the
+        secure management of user data in a cloud database. It also illustrates how my development process aligns with
+        professional standards for team collaboration, stakeholder communication, and security. The portfolio is
+        organized according to the navigation tabs displayed above, arranged from left to right. It was developed
+        individually, with a six-week deadline. This time constraint was primarily due to the course structure, which I
+        discuss further in the concluding section of the portfolio. As software is rarely developed from scratch, this
+        portfolio builds on one of my earliest projects at SNHU. It demonstrates how far I have progressed as a
+        developer and my ability to work with code that I have not encountered in over a year.</p>
+
+      <p> My work includes three enhancements to my IT145, Foundations in Application Development, Project Two
+        submission. I completed this Java project during my first term at Southern New Hampshire University. It is a
+        console application designed for internal use by a rescue animal company to track its inventory. In this
+        context, a rescue animal is an animal trained to perform rescue work, such as locating a person who has gone
+        missing on a ski trail. The application features a simple menu system and a list-based inventory of rescue
+        animals. It allows users to view all rescue animals, their training statuses, and whether a third party has
+        reserved them for a rescue. Users can also add rescue animals to the inventory or update the reservation status
+        of an animal that is in service. I will express more details about the application in the following section, but
+        essentially it is a bare-bones, local data management application.</p>
+
+      <p> This artifact was selected because, although basic, it demonstrates the core functions required of effective
+        software: robust user input and output with error handling, data structuring and storage, and algorithmic data
+        manipulation. My three enhancements demonstrate my ability to build each core function. In addition, I changed
+        the language that I wrote the original software in from Java to C++. I used clang-tidy throughout the
+        development process to ensure security was never an afterthought. Lastly, I used CMake to statically link all
+        libraries used within the application, ensuring that the binary runs on any Windows device after compilation.
+      </p>
     </section>
-
     <section id="origins" class="tab-panel">
-      <h2>Code Review and Original Code Discussion</h2>
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/K5_CyhouOq4?si=wlDoluy9vRYV3w6N"
-        title="YouTube video player" frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <h2 class="centercontent">Code Review and Original Code Discussion</h2>
+      <div class="centercontent">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/K5_CyhouOq4?si=wlDoluy9vRYV3w6N"
+          title="YouTube video player" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <p class="nospace">Above is a video of a very informal code review I embarked on upon starting work on this
+        project. In it I detail the general structure of the original Java project, what I believe needs improvement,
+        and my strategy for enhancing it in the following sections. While not everything I mentioned in this initial
+        investigation was implemented, all the ideas have been explored and I may still be working on them today.</p>
+      <br>
+      <p class="nospace">The first section I want to highlight, mentioned in the code review, is my failure to leverage
+        the simple class hierarchy I created. Because I never implemented RescueAnimal as an abstract class, I ended up
+        having to write logic in my main() driver as such:</p>
       <pre>
-        <code class="language-java">
-
-        </code>
+          <code class="language-java">
+                      // Used to seed initial data
+                      initializeDogList();
+                      initializeMonkeyList();
+          </code>
+        </pre>
+      <p class="nospace">or</p>
+      <pre>
+          <code class="language-java">
+                      switch(user_input_as_num){
+                      						
+                      		case 1:
+                      			intakeNewDog(io);
+                      			break;
+                      						
+                      		case 2:
+                      			intakeNewMonkey(io);
+                      			break;
+          </code>
       </pre>
+      <p class="nospace">There should be no need to refer to each animal type if polymorphism is leveraged properly</p>
+
     </section>
 
     <section id="enhancement-1" class="tab-panel">
       <h2>Enhancement 1: Software Engineering &amp; Design</h2>
       <p>Refactoring tightly coupled routines into clean, object-oriented modules.</p>
       <pre><code class="language-cpp">// Thread-safe ring buffer implementation
-template &lt;typename T, size_t Capacity&gt;
-class LockFreeQueue {
-    // Implementation details...
-};</code></pre>
+                      template &lt;typename T, size_t Capacity&gt;
+                      class LockFreeQueue {
+                          // Implementation details...
+                      };</code></pre>
     </section>
 
     <section id="enhancement-2" class="tab-panel">
