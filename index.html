@@ -23,6 +23,7 @@
 <body>
   <header>
     <h1>CS-499 Capstone</h1>
+    <h3>By Nathaniel McCarthy</h3>
     <nav aria-label="Portfolio Navigation">
       <ul class="nav-tabs">
         <li><a href="#intro" class="nav-link">Self Assessment</a></li>
@@ -38,56 +39,23 @@
   <main>
     <section id="intro" class="tab-panel">
       <h2>Professional Self Assessment</h2>
-        <p>Employers often interview a number of technically qualified candidates, so you should try to emphasize
-          aspects of your ePortfolio that set you apart and quantifiably illustrate your competence and employability.
-          In addition, the professional self-assessment is an opportunity to showcase your superior computer science
-          knowledge, skills, and expertise. Be sure that your professional self-assessment is well-organized and
-          thoughtful and that it effectively communicates your strengths in the field of computer science. The
-          self-assessment might be a great first draft of a cover letter and useful as you apply for jobs with your new
-          degree. Take advantage of your instructor’s feedback for this reason.</p>
-        <p>Include the following in your professional self-assessment:</p>
-        <ol type="A">
-          <li>Discuss how completing your coursework throughout the program and developing the ePortfolio has helped
-            you&nbsp;<b>showcase your strengths</b>, shape your professional goals and values, and prepare to enter or
-            become more employable in the computer science field.<br>
-            <ol>
-              <li style="list-style-type: none;">
-                <ol>
-                  <li>Use specific examples from your program and include examples outside of the artifacts included in
-                    your ePortfolio.</li>
-                  <li>Address the following topics:&nbsp;<b>collaborating in a team environment, communicating with
-                      stakeholders, data structures and algorithms, software engineering and database, and
-                      security.&nbsp;</b>This section should function as an overall introduction to your skills, not a
-                    discussion of the artifacts.</li>
-                </ol>
-              </li>
-            </ol>
-          </li>
-          <li>Summarize and introduce how your artifacts fit together and inform the portfolio as a whole.
-            <ol>
-              <li style="list-style-type: none;">
-                <ol>
-                  <li>This summary will help demonstrate the full range of your computer science talents and abilities.
-                  </li>
-                  <li>This section should introduce your audience to the technical artifacts that follow the
-                    professional&nbsp;<b>self-assessment.</b></li>
-                </ol>
-              </li>
-            </ol>
-          </li>
-        </ol>
-      </li>
+      <p>    As I have progressed through my final term at Southern New Hampshire University, I have had the opportunity to demonstrate the breadth and depth of my strengths as a software developer. To date, the program has focused on individual topics and the development of implementations that require limited testing and integration. For example, in CS-340 Client Server Development, we built a Python module that made four HTTP requests to an existing MongoDB instance to support all create, read, update, and delete (CRUD) operations. This experience was extremely valuable in helping me learn how to interact with application programming interfaces (APIs) and understand data schemas—skills that will likely contribute to my success in computer science. However, it demonstrated only one dimension of my programming capabilities. Competent programmers can implement a single idea or algorithm independently, but exceptional programmers can integrate multiple layers of ideas while maintaining a readable codebase for future developers. As I pursue a career as a professional programmer, I have learned that effective communication, well-organized code, and a passion for learning are essential. This portfolio represents my first professional contribution to my aspiring career in computer science.</p>
+      <p>    The objectives of this portfolio are to demonstrate proficiency in using a modern, industry-standard toolchain, sound design decision-making; the ability to justify the efficiency of selected algorithms, and the secure management of user data in a cloud database. It also illustrates how my development process aligns with professional standards for team collaboration, stakeholder communication, and security. The portfolio is organized according to the navigation tabs displayed above, arranged from left to right. It was developed individually, with a six-week deadline. This time constraint was primarily due to the course structure, which I discuss further in the concluding section of the portfolio. As software is rarely developed from scratch, this portfolio builds on one of my earliest projects at SNHU. It demonstrates how far I have progressed as a developer and my ability to work with code that I have not encountered in over a year.</p>
+      <p>    My work includes three enhancements to my IT145, Foundations in Application Development, Project Two submission. I completed this Java project during my first term at Southern New Hampshire University. It is a console application designed for internal use by a rescue animal company to track its inventory. In this context, a rescue animal is an animal trained to perform rescue work, such as locating a person who has gone missing on a ski trail. The application features a simple menu system and a list-based inventory of rescue animals. It allows users to view all rescue animals, their training statuses, and whether a third party has reserved them for a rescue. Users can also add rescue animals to the inventory or update the reservation status of an animal that is in service. I will express more details about the application in the following section, but essentially it is a bare-bones, local data management application.</p>
+      <p>    This artifact was selected because, although basic, it demonstrates the core functions required of effective software: robust user input and output with error handling, data structuring and storage, and algorithmic data manipulation. My three enhancements demonstrate my ability to build each core function. In addition, I changed the language that I wrote the original software in from Java to C++. I used clang-tidy throughout the development process to ensure security was never an afterthought. Lastly, I used CMake to statically link all libraries used within the application, ensuring that the binary runs on any Windows device after compilation.</p>
     </section>
 
     <section id="origins" class="tab-panel">
-      <h2>Work</h2>
-      <p>Executive summary of the original artifact, its purpose, and the overall trajectory of improvements.</p>
-      <p>I intend to do all my development work for this course in the following <a
-          href="https://github.com/RobotsCoffeeAndCode/CS_499">Repository</a></p>
+      <h2>Code Review and Original Code Discussion</h2>
       <iframe width="560" height="315" src="https://www.youtube.com/embed/K5_CyhouOq4?si=wlDoluy9vRYV3w6N"
         title="YouTube video player" frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <pre>
+        <code class="language-java">
+
+        </code>
+      </pre>
     </section>
 
     <section id="enhancement-1" class="tab-panel">
@@ -113,10 +81,15 @@ class LockFreeQueue {
     <section id="conclusion" class="tab-panel">
       <h2>Conclusion &amp; Future Work</h2>
       <p>Reflections on technical growth and planned extensions.</p>
+      <p>I intend to do all my development work for this course in the following <a
+          href="https://github.com/RobotsCoffeeAndCode/CS_499">Repository</a></p>
     </section>
   </main>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="./app.js"></script>
   <script src="./app.js"></script>
 </body>
 

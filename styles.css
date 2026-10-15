@@ -6,10 +6,28 @@
   --text-color: #f8fafc;
   --text-muted: #94a3b8;
 }
+p {
+  white-space: pre-wrap;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.1rem;
+}
 
 h1 {
   font-family:Verdana, Geneva, Tahoma, sans-serif;
+  margin-bottom: 0rem;
   color: var(--primary-color);
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 1.75rem;
+}
+
+h3 {
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  color: var(--text-muted);
 }
 
 body {
@@ -20,6 +38,7 @@ body {
   margin: 0;
   padding: 3rem;
   max-width: 90vw;
+  min-height: 100vh;
   margin-left: auto;
   margin-right: auto;
 }
