@@ -1,13 +1,15 @@
 :root {
-  --bg-color: #f8fafc;
-  --text-color: #0f172a;
-  --card-bg: #ffffff;
+  --bg-color: #0f172a;
+  --card-bg: #1e293b;
   --border-color: #0fee99;
   --primary-color: #0fee99;
+  --text-color: #f8fafc;
+  --text-muted: #94a3b8;
 }
 
 h1 {
-  color:#0fee99;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  color: var(--primary-color);
 }
 
 body {
@@ -16,7 +18,7 @@ body {
   color: var(--text-color);
   background-color: var(--bg-color);
   margin: 0;
-  padding: 3rem 3rem;
+  padding: 3rem;
   max-width: 90vw;
   margin-left: auto;
   margin-right: auto;
@@ -39,9 +41,9 @@ body {
   margin-bottom: 0.25rem;
   padding: 0.25rem 0.5rem;
   text-decoration: none;
-  color: #64748b;
+  color: var(--text-muted);
   font-weight: 600;
-  border-radius: 4px 4px 4px 4px;
+  border-radius: 4px;
   transition: all 0.2s ease-in-out;
 }
 
@@ -61,7 +63,7 @@ body {
   background: var(--card-bg);
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 .tab-panel.active {
