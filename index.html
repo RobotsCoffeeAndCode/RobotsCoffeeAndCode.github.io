@@ -39,7 +39,12 @@
   <main>
     <section id="intro" class="tab-panel">
       <h2>Professional Self Assessment</h2>
-
+      <div class="centercontent">
+        <p class="nospace"> All the files for my final code submission are located in this <a
+            href="https://github.com/RobotsCoffeeAndCode/CS_499" target="_blank">repository</a> feel free to review them
+          as I walk you through my project experience.</p>
+      </div>
+<hr>
       <p>As I have progressed through my final term at Southern New Hampshire University, I have had the opportunity to
         demonstrate the breadth and depth of my strengths as a software developer. To date, the program has focused on
         individual topics and the development of implementations that require limited testing and integration. For
@@ -80,6 +85,7 @@
         development process to ensure security was never an afterthought. Lastly, I used CMake to statically link all
         libraries used within the application, ensuring that the binary runs on any Windows device after compilation.
       </p>
+
     </section>
     <section id="origins" class="tab-panel">
       <h2 class="centercontent">Code Review and Original Code Discussion</h2>
@@ -93,6 +99,10 @@
         project. In it I detail the general structure of the original Java project, what I believe needs improvement,
         and my strategy for enhancing it in the following sections. While not everything I mentioned in this initial
         investigation was implemented, all the ideas have been explored and I may still be working on them today.</p>
+      <div class="centercontent">
+        <p class="nospace">Here is a link to the <a href="https://github.com/RobotsCoffeeAndCode/IT145-Project-II"
+            target="_blank">Java project files</a>, should you feel inclined to review the code yourself</p>
+      </div>
       <hr>
       <p class="nospace">The first section I want to highlight, mentioned in the code review, is my failure to leverage
         the simple class hierarchy I created. Because I never implemented RescueAnimal as an abstract class, I ended up
@@ -161,7 +171,8 @@
         time. This oversight was primarily due to the effort I invested in making the project conform to
         industry-standard software engineering practices. In retrospect, I made the challenging decision to move beyond
         the tools I was familiar with, Visual Studio and MSVC (Microsoft’s C compiler), and adopt another compiler
-        widely recognized in the industry: LLVM's Clang.</p>
+        widely recognized in the industry: LLVM's Clang. This is not to say that MSVC compiler or Visual Studio is a bad
+        IDE choice, but I wanted to leverage the efficiency optimizations that come with clang for future work.</p>
 
       <p>I made this choice for several key reasons. First, I aspire to become an embedded systems engineer, a role that
         requires a strong foundation in C and C++. Developing that foundation involves working more closely with the
@@ -185,12 +196,14 @@
         conventions. Initially, it was difficult to read my function parameters because I usually place each parameter
         on a separate line, whereas clangd prioritizes an 80-column line width. I eventually learned how to configure it
         to enforce line-by-line parameters, but by then I was nearly finished with the second enhancement. With all this
-        said, let's talk about the actual code changes that were made beyond transitioning between programming languages.</p>
-<hr>
+        said, let's talk about the actual code changes that were made beyond transitioning between programming
+        languages.</p>
+
+      <hr>
 
       <pre>
         <code class="language-cpp">
-          int main = 5;
+        Snippets here!
         </code>
       </pre>
     </section>
