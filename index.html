@@ -38,13 +38,13 @@
 
   <main>
     <section id="intro" class="tab-panel">
-      <h2>Professional Self Assessment</h2>
+      <h2 class="centercontent">Professional Self Assessment</h2>
       <div class="centercontent">
         <p class="nospace"> All the files for my final code submission are located in this <a
             href="https://github.com/RobotsCoffeeAndCode/CS_499" target="_blank">repository</a> feel free to review them
           as I walk you through my project experience.</p>
       </div>
-<hr>
+      <hr>
       <p>As I have progressed through my final term at Southern New Hampshire University, I have had the opportunity to
         demonstrate the breadth and depth of my strengths as a software developer. To date, the program has focused on
         individual topics and the development of implementations that require limited testing and integration. For
@@ -165,7 +165,7 @@
     </section>
 
     <section id="enhancement-1" class="tab-panel">
-      <h2>Software Engineering &amp; Design</h2>
+      <h2 class="centercontent">Software Engineering &amp; Design</h2>
 
       <p>I anticipated that this initial enhancement would be substantial, but I did not expect it to require so much
         time. This oversight was primarily due to the effort I invested in making the project conform to
@@ -209,27 +209,96 @@
     </section>
 
     <section id="enhancement-2" class="tab-panel">
-      <h2>Enhancement 2: Algorithms &amp; Data Structures</h2>
-      <p>Replacing an \(O(N)\) search routine with a balanced search tree.</p>
+      <h2 class="centercontent">Algorithms &amp; Data Structures</h2>
+
+      <p>This second enhancement deepened my understanding of graph algorithms, efficient graph representation in code,
+        and the importance of data encoding. My objective was to implement functionality for relocating a service
+        animal, together with an estimated cost for the work. At a high level, I aimed to create a graph data structure
+        that simulates flight connections between continents and assigns an estimated cost based on the actual distance
+        in miles. Understanding the different ways to represent this graph (matrix versus adjacency list) and developing
+        a straightforward estimation system were the least challenging parts of this enhancement. I created an
+        adjacency-list representation to minimize memory usage and used the distances between the geographic centers of
+        each continent, multiplied by the average cost per mile of air travel ($0.18 at the time of research), to create
+        a graph that could be searched.</p>
+
+      <p>The next, more challenging step was determining which algorithm to implement and why. My initial choice was
+        Dijkstra’s algorithm, since there were no negative edge costs and, given how simplified the graph was,
+        developing a realistic heuristic for A* did not seem reasonable. Knowing that my initial intuition often needs
+        refining through research, I started to study the algorithms commonly used in
+        satellite navigation. This is primarily because I viewed this problem as a more complex extension of my own,
+        that already has an excellent solution. It appears that much of
+        the work on algorithms foundational to satellite navigation focuses on contracting the enormous graph of path
+        data already available. Consequently, the tradeoff involved in implementing any of these improvements did not
+        seem worthwhile for my simple graph. The only useful addition I found was the bidirectional version of
+        Dijkstra’s algorithm,
+        which reduces search time by running Dijkstra’s algorithm from both the start and target nodes. However, after
+        considering its implementation complexity, I concluded that the time investment was not justified by the modest
+        efficiency gain. Returning to my original approach, I implemented Dijkstra’s algorithm.</p>
+
+      <p>The final and most challenging part of implementing this enhancement was adapting the members of my existing
+        RescueAnimal class to work with the newly created graph. I chose to use continents rather than countries (I
+        believe the number of connections between countries is upward of 15,000) and encode them alphabetically, from
+        zero to six. As a result, I had to rename many functions, create helper functions to encode a string as its
+        corresponding size_t value, and add checks to prevent access when inServiceContinent, which I chose to make a
+        C++ optional type, is nullopt. The creation of the graph and implementation of the algorithm proceeded smoothly.
+        However, the encoding work, along with renaming half of my functions from country to continent, was a large time
+        sink.</p>
+
+      <hr>
+      <pre>
+        <code class="language-cpp">
+        Snippets here!
+        </code>
+      </pre>
+
     </section>
 
     <section id="enhancement-3" class="tab-panel">
-      <h2>Enhancement 3: Databases</h2>
-      <p>Optimizing persistence layers and schema normalization.</p>
-    </section>
+      <h2 class="centercontent">Database Integration</h2>
+<p>As with my previous enhancements, I significantly underestimated the scope of this work. I initially thought
+  that Supabase offered a native C++ integration and that my life was going to be a bit easier. Yet upon scouring their
+  documentation, I failed to find any. As a result, I relied on two additional
+  third-party libraries to create a client for making HTTP requests to the Supabase API. The first, <a href="https://github.com/nlohmann/json" target="_blank">nlohmann</a>, is a header-only library that provides a C++ JSON class. I used this class to parse JSON responses
+  and construct payloads for sending to the API when retrieving or saving local instances of user data. The
+  second, <a href="https://github.com/libcpr/cpr" target="_blank">CPR</a> (C++ Requests), is a library built on cURL and libcurl that provides a simplified interface for
+  making basic HTTP requests, among other capabilities. This was its primary use in my project.</p>
 
-    <section id="conclusion" class="tab-panel">
-      <h2>Conclusion &amp; Future Work</h2>
-      <p>Reflections on technical growth and planned extensions.</p>
-      <p>I intend to do all my development work for this course in the following <a
-          href="https://github.com/RobotsCoffeeAndCode/CS_499">Repository</a></p>
-    </section>
+<p>In addition to implementing this HTTP client, I created a basic login screen and a test user account with
+  pre-populated data. I removed the initializeDog() and initializeMonkey() functions from main.cpp, as all seeded
+  data is now stored in this account. When the application opens, users are prompted to sign in or create an
+  account. Users are welcome to create their own accounts to explore the application. Usernames must be in email
+  format, although they do not need to correspond to valid email addresses because email verification has been
+  disabled for the purposes of this project. To access the test account, use “admin” as the email and “test” as
+  the password. Any changes made to the animals associated with the test account will persist in the database.
+  This can be verified by closing the application and signing in again.</p>
+
+<p>In addition to integration of the database functionality, I refactored a substantial portion of the code. I had repeatedly
+  violated the DRY (Don’t Repeat Yourself) principle in the previous enhancement, so I worked to address this
+  issue. Along with removing duplicated logic, I simplified several functions in main.cpp in response to feedback
+  from clang-tidy. In particular, I divided reserveAnimal() into three smaller functions, separating its original
+  responsibilities into more manageable parts. I then gave the same treatment to my printAnimals() function, splitting how
+  it handles filters from the actual printing to stdout. I also consolidated several enum and encoded representations.
+  Specifically, RescueUtils.hpp now contains only the continent graph encoding, alongside the sole representation of
+  valid monkey species.</p>
+  
+  <hr>
+  <pre>
+          <code class="language-cpp">
+          Snippets here!
+          </code>
+        </pre>
+  </section>
+  
+  <section id="conclusion" class="tab-panel">
+    <h2 class="centercontent">Conclusion &amp; Future Work</h2>
+    <p>Reflections on technical growth and planned extensions.</p>
+  </section>
   </main>
-
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
   <script src="./app.js"></script>
   <script src="./app.js"></script>
-</body>
-
-</html>
+  </body>
+  
+  </html>
