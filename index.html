@@ -93,7 +93,6 @@
         project. In it I detail the general structure of the original Java project, what I believe needs improvement,
         and my strategy for enhancing it in the following sections. While not everything I mentioned in this initial
         investigation was implemented, all the ideas have been explored and I may still be working on them today.</p>
-      <br>
       <hr>
       <p class="nospace">The first section I want to highlight, mentioned in the code review, is my failure to leverage
         the simple class hierarchy I created. Because I never implemented RescueAnimal as an abstract class, I ended up
@@ -156,8 +155,39 @@
     </section>
 
     <section id="enhancement-1" class="tab-panel">
-      <h2>Enhancement 1: Software Engineering &amp; Design</h2>
-      <p>Refactoring tightly coupled routines into clean, object-oriented modules.</p>
+      <h2>Software Engineering &amp; Design</h2>
+
+      <p>I anticipated that this initial enhancement would be substantial, but I did not expect it to require so much
+        time. This oversight was primarily due to the effort I invested in making the project conform to
+        industry-standard software engineering practices. In retrospect, I made the challenging decision to move beyond
+        the tools I was familiar with, Visual Studio and MSVC (Microsoft’s C compiler), and adopt another compiler
+        widely recognized in the industry: LLVM's Clang.</p>
+
+      <p>I made this choice for several key reasons. First, I aspire to become an embedded systems engineer, a role that
+        requires a strong foundation in C and C++. Developing that foundation involves working more closely with the
+        compiler and tools such as Makefiles and CMake. Second, Clang includes a range of built-in tools. For example, I
+        use clang-tidy, a static analysis tool included with Clang, to improve the security of my code. Finally, using
+        Clang with CMake offers flexibility: including a CMake build file in a project allows tools to be added to the
+        build toolchain as needed. For instance, I run a simple Google Test suite as the final step in my build process
+        to verify that my unit tests pass before testing runtime features.</p>
+
+      <p>These considerations led me to try Clang and adopt a less structured, yet organizationally demanding project
+        setup. After installing and configuring everything, learning how to compile the project correctly, encountering
+        repeated failures, and reimplementing Google Test, I was able to get a small piece of C++ code working properly.
+      </p>
+
+      <p>After writing C++ code using clang-tidy and clangd (Clang's built-in Language Server Protocol, or LSP), I
+        realized that I had significant room for improvement in my C++ programming. For example, I was unaware that a
+        modern style convention is to begin a function definition with the keyword `auto` and specify the return type
+        afterward. I was also unfamiliar with the chrono library, as I rarely have worked with calandar dates. However,
+        as my project made heavy use of them I used the `year_month_day` object frequently. This proved to be
+        extremely useful for tracking rescue animal date data. I also had to become accustomed to clangd’s formatting
+        conventions. Initially, it was difficult to read my function parameters because I usually place each parameter
+        on a separate line, whereas clangd prioritizes an 80-column line width. I eventually learned how to configure it
+        to enforce line-by-line parameters, but by then I was nearly finished with the second enhancement. With all this
+        said, let's talk about the actual code changes that were made beyond transitioning between programming languages.</p>
+<hr>
+
       <pre>
         <code class="language-cpp">
           int main = 5;
