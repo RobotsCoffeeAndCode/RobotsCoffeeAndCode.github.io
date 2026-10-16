@@ -40,7 +40,7 @@
     <section id="intro" class="tab-panel">
       <h2>Professional Self Assessment</h2>
 
-      <p> As I have progressed through my final term at Southern New Hampshire University, I have had the opportunity to
+      <p>As I have progressed through my final term at Southern New Hampshire University, I have had the opportunity to
         demonstrate the breadth and depth of my strengths as a software developer. To date, the program has focused on
         individual topics and the development of implementations that require limited testing and integration. For
         example, in CS-340 Client Server Development, we built a Python module that made four HTTP requests to an
@@ -53,7 +53,7 @@
         learned that effective communication, well-organized code, and a passion for learning are essential. This
         portfolio represents my first professional contribution to my aspiring career in computer science.</p>
 
-      <p> The objectives of this portfolio are to demonstrate proficiency in using a modern, industry-standard
+      <p>The objectives of this portfolio are to demonstrate proficiency in using a modern, industry-standard
         toolchain, sound design decision-making; the ability to justify the efficiency of selected algorithms, and the
         secure management of user data in a cloud database. It also illustrates how my development process aligns with
         professional standards for team collaboration, stakeholder communication, and security. The portfolio is
@@ -63,7 +63,7 @@
         portfolio builds on one of my earliest projects at SNHU. It demonstrates how far I have progressed as a
         developer and my ability to work with code that I have not encountered in over a year.</p>
 
-      <p> My work includes three enhancements to my IT145, Foundations in Application Development, Project Two
+      <p>My work includes three enhancements to my IT145, Foundations in Application Development, Project Two
         submission. I completed this Java project during my first term at Southern New Hampshire University. It is a
         console application designed for internal use by a rescue animal company to track its inventory. In this
         context, a rescue animal is an animal trained to perform rescue work, such as locating a person who has gone
@@ -73,7 +73,7 @@
         of an animal that is in service. I will express more details about the application in the following section, but
         essentially it is a bare-bones, local data management application.</p>
 
-      <p> This artifact was selected because, although basic, it demonstrates the core functions required of effective
+      <p>This artifact was selected because, although basic, it demonstrates the core functions required of effective
         software: robust user input and output with error handling, data structuring and storage, and algorithmic data
         manipulation. My three enhancements demonstrate my ability to build each core function. In addition, I changed
         the language that I wrote the original software in from Java to C++. I used clang-tidy throughout the
@@ -94,6 +94,7 @@
         and my strategy for enhancing it in the following sections. While not everything I mentioned in this initial
         investigation was implemented, all the ideas have been explored and I may still be working on them today.</p>
       <br>
+      <hr>
       <p class="nospace">The first section I want to highlight, mentioned in the code review, is my failure to leverage
         the simple class hierarchy I created. Because I never implemented RescueAnimal as an abstract class, I ended up
         having to write logic in my main() driver as such:</p>
@@ -108,7 +109,8 @@
       <pre>
           <code class="language-java">
                       switch(user_input_as_num){
-                      						
+
+                      // Two different options to add animals to the inventory
                       		case 1:
                       			intakeNewDog(io);
                       			break;
@@ -118,18 +120,49 @@
                       			break;
           </code>
       </pre>
+      <p class="nospace">or</p>
+      <pre>
+        <code class="language-java">
+          	          // Separate list of Dogs and list of Monkeys
+	                  private static ArrayList<Dog> dogList = new ArrayList<Dog>();
+                      private static ArrayList<Monkey> monkeyList = new ArrayList<Monkey>();
+        </code>
+      </pre>
       <p class="nospace">There should be no need to refer to each animal type if polymorphism is leveraged properly</p>
-
+      <hr>
+      <p class="nospace">Up next, we can observe how poorly I selected types that actually match the real world
+        representations of the data in my RescueAnimal class</p>
+      <pre>
+          <code class="language-java">
+                      // Instance variables
+                      private String name;
+                      private String animalType;
+                      private String gender;
+                      private String age;
+                      private String weight;
+                      private String acquisitionDate;
+                      private String acquisitionCountry;
+                      private String trainingStatus;
+                      private boolean reserved;
+                      private String inServiceCountry;
+          </code>
+      </pre>
+      <br>
+      <hr>
+      <p class="nospace">Finally, a lot of general good programming practices are missing from this code. For it being
+        such a simple project, I had no idea what I was doing back then. I didn't do a good job of separating
+        definitions from implementation. My comments needed to be a lot better. This project is truly a good showcase of
+        how little direction I had to begin with, both in design principles and coding standards.</p>
     </section>
 
     <section id="enhancement-1" class="tab-panel">
       <h2>Enhancement 1: Software Engineering &amp; Design</h2>
       <p>Refactoring tightly coupled routines into clean, object-oriented modules.</p>
-      <pre><code class="language-cpp">// Thread-safe ring buffer implementation
-                      template &lt;typename T, size_t Capacity&gt;
-                      class LockFreeQueue {
-                          // Implementation details...
-                      };</code></pre>
+      <pre>
+        <code class="language-cpp">
+          int main = 5;
+        </code>
+      </pre>
     </section>
 
     <section id="enhancement-2" class="tab-panel">
@@ -150,7 +183,6 @@
     </section>
   </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
   <script src="./app.js"></script>
