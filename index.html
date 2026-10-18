@@ -202,7 +202,8 @@ private String inServiceCountry;
 
       <hr>
 
-      <p class="nospace">Here are some of my new design decisions. First, I created the intakeNewAnimal() function which the user calls
+      <p class="nospace">Here are some of my new design decisions. First, I created the intakeNewAnimal() function which
+        the user calls
         upon selecting the main menu option to intake a new animal.</p>
       <pre>
         <code class="language-cpp">
@@ -232,11 +233,14 @@ void intakeNewAnimal(std::vector<std::unique_ptr<RescueAnimal>> &animalList, con
         </code>
       </pre>
       <p class="nospace"> Before there were two main menu options, one for each
-        animal type. This was bad design because it coupled the number of animal types with the main menu. A change in the
-        number of animal types directly required changing the main menu. Now you simply can extend this function with the 
+        animal type. This was bad design because it coupled the number of animal types with the main menu. A change in
+        the
+        number of animal types directly required changing the main menu. Now you simply can extend this function with
+        the
         ability to intake a new animal type, and the main menu remains untouched.
       </p>
-      <p class="nospace">Second, I added RescueAnimal types that reflect the real world and are much more suited to database operations.
+      <p class="nospace">Second, I added RescueAnimal types that reflect the real world and are much more suited to
+        database operations.
         I also added enums for types that have a limited number of options.
       </p>
       <pre>
@@ -273,9 +277,12 @@ private:
   ...
         </code>
       </pre>
-      <p class="nospace">With the addition of enhancement 3 I also added a serializeSubclassFields() function that takes in a json payload.
-        Its purpose is to serialize unique fields (such as the dog specific breed field) thus making forming the request to add
-        a new animal to the database straightforward. However, this also means that this function must be overidden for each new
+      <p class="nospace">With the addition of enhancement 3 I also added a serializeSubclassFields() function that takes
+        in a json payload.
+        Its purpose is to serialize unique fields (such as the dog specific breed field) thus making forming the request
+        to add
+        a new animal to the database straightforward. However, this also means that this function must be overidden for
+        each new
         animal type added.
       </p>
       <pre>
@@ -285,8 +292,9 @@ private:
 virtual void serializeSubclassFields(nlohmann::json &payload) const = 0;
         </code>
       </pre>
-    <p class="nospace">There were many more design decisions with tradeoffs made that you can view in my codebase, but these directly cover how
-      I enhanced what I originally described in my code review video. </p>
+      <p class="nospace">There were many more design decisions with tradeoffs made that you can view in my codebase, but
+        these directly cover how
+        I enhanced what I originally described in my code review video. </p>
     </section>
 
     <section id="enhancement-2" class="tab-panel">
@@ -449,7 +457,7 @@ int cost = pathResult.distances[*endIdx];
       </pre>
     </section>
 
-        
+
     <section id="enhancement-3" class="tab-panel">
       <h2 class="centercontent">Database Integration</h2>
       <p>As with my previous enhancements, I significantly underestimated the scope of this work. I initially thought
@@ -548,7 +556,8 @@ public:
 } // namespace auth
         </code>
       </pre>
-      <p class="nospace">The key implementation detail here is to have this guard clause be the very first thing in my program
+      <p class="nospace">The key implementation detail here is to have this guard clause be the very first thing in my
+        program
         as it ensures that nothing can happen before a user has a valid supabase client.
       </p>
       <pre>
@@ -560,7 +569,8 @@ if (!handleUserLogin(client)) {
 }
         </code>
       </pre>
-      <p class="nospace">Here is an example of using the supabase client to save a newly added RescueAnimal to the database</p>
+      <p class="nospace">Here is an example of using the supabase client to save a newly added RescueAnimal to the
+        database</p>
       <pre>
         <code class="language-cpp">
 if (client.saveAnimal(*newDog)) {
@@ -572,8 +582,9 @@ if (client.saveAnimal(*newDog)) {
 }
         </code>
       </pre>
-      <p class="nospace">Last but not least, here is where that earlier serialize function comes into play. As it appends the
-       unqiue animal type fields to our payload before we send the http request to the supabase API.
+      <p class="nospace">Last but not least, here is where that earlier serialize function comes into play. As it
+        appends the
+        unqiue animal type fields to our payload before we send the http request to the supabase API.
       </p>
       <pre>
         <code class="language-cpp">
@@ -600,44 +611,124 @@ if (client.saveAnimal(*newDog)) {
         </code>
       </pre>
     </section>
-<div id="conclusion" class="tab-panel">
-  <h2 class="centercontent">Conclusion &amp; Future Work</h2>
-  <p> </p>
-  <hr>
- <div class="citations-container">
-    <h2 class="centercontent">References</h2>
-    <ul style="list-style-type: none; padding-left: 0;">
-        
-        <!-- nlohmann/json Citation -->
-        <li style="margin-bottom: 1.5em; text-indent: -2em; padding-left: 2em;">
-            <span class="author">Lohmann, N.</span> 
-            (<span class="year">2026</span>). 
-            <span class="title" style="font-style: italic;">JSON for Modern C++</span> 
-            (Version 3.11.3) [Computer software]. 
-            <span class="publisher">GitHub</span>. 
-            <a href="https://github.com/nlohmann/json" target="_blank" rel="noopener noreferrer">https://github.com/nlohmann/json</a>
+    <div id="conclusion" class="tab-panel">
+      <h2 class="centercontent">Conclusion &amp; Future Work</h2>
+      <p>Looking back on this experience, transforming a basic first-term Java console program into a modern C++
+        application has served as a tangible representation of my growth at SNHU. When I initially wrote the IT-145
+        project,
+        my
+        understanding of software engineering was mostly functional and confined to immediate syntax. Re-designing this
+        project in C++ forced me to confront foundational software engineering paradigms: enforcing security best
+        practices
+        through strong typing and modern libraries (`std::chrono`, `std::optional`), establishing polymorphic
+        abstractions
+        to avoid dynamic runtime casts, and implementing rigorous static analysis via <code>clang-tidy</code>. This
+        project
+        helped me bridge the
+        gap between merely writing code that runs and architecting maintainable, secure systems.</p>
+      <p>The primary constraint across this project was the rigid six-week development timeline (eight-weeks for the
+        full
+        course) dictated by the CS-499 course format.
+        Allocating essentially two weeks per enhancement created significant pressure to prioritize core architectural
+        functionality over non-essential features. In Enhancement 1, understanding the Clang toolchain, CMake
+        configurations,
+        and
+        Google Test integration consumed far more setup time than anticipated. Similarly, discovering the lack of a
+        native
+        C++
+        Supabase SDK in Enhancement 3 required rapidly researching, integrating, and statically linking third-party
+        libraries
+        (CPR and nlohmann/json). Operating under this constraint simulated a fast-paced development sprint, teaching me
+        how
+        to
+        make pragmatic engineering trade-offs. For instance, opting for the standard Dijkstra's algorithm over its
+        bidirectional
+        version when the graph size did not justify the implementation effort.</p>
+
+      <p>With all of these experiences and constraints from progressing through the project stated, there are a few
+        things that I felt
+        I could improve if I had more development time.
+      </p>
+
+      <ul>
+        <li>
+          <strong>Delete functionality: </strong> I haven't fully implemented a CRUD application. I think that what I
+          have demonstrated shows that I
+          understand how to interact with a database and that I could confidently add this feature to my supabase
+          client. Yet, as of writing this I
+          have not fully implemented the ability to delete an animal from the database. Should I return to this project,
+          this would be my first priority.
         </li>
-
-        <!-- libcpr/cpr Citation -->
-        <li style="margin-bottom: 1.5em; text-indent: -2em; padding-left: 2em;">
-            <span class="author">Sauter, F., &amp; Traub, K.</span> 
-            (<span class="year">2026</span>). 
-            <span class="title" style="font-style: italic;">C++ Requests: Curl for People</span> 
-            (Version 1.11.1) [Computer software]. 
-            <span class="publisher">GitHub</span>. 
-            <a href="https://github.com/libcpr/cpr" target="_blank" rel="noopener noreferrer">https://github.com/libcpr/cpr</a>
+        <li>
+          <strong>Moving from Console App to GUI Interface:</strong> As all of the core functionaltiy, besides what is
+          mentioned here, has been implemented. I
+          think a fair extension would be to add a more appealing user interface. The addition of a library such as Qt
+          or Dear ImGui would make this software
+          worth actually distributing to a small group of users for testing.
         </li>
-        
-    </ul>
-</div>
+        <li>
+          <strong>Testing:</strong> While I implemented a test suite and wrote some simple tests, I failed to provide
+          even near the level of test coverage
+          that a professional application would have. Because there are only a few library integrations within this
+          application it really should have all branches
+          of its execution unit tested and a overall coverage metric calculated.
+        </li>
+        <li>
+          <strong>Direct Career Goal Alignment:</strong> I really enjoyed this project because I have been able to
+          showcase a wide range of computer science
+          skills and the ability to work with modern collaborative tooling. However, my goal is to become an embedded
+          systems engineer and many of these skills
+          are less relevant to this specific role. If I had more time the addition of some role-specific skills would've
+          benefitted me and this projects quality
+          tremendously. Yet, in hindsight, this project has allowed me to display all of the skills I have beyond my
+          chosen industry specialization. Even this very
+          website is a skill that is not usually shown to employers when applying for the role and I am thankful that I
+          have an active record of the breadth of my skills.
+        </li>
+      </ul>
 
-</section>
-</main>
+      <p>Ultimately, this capstone demonstrated that software engineering is fundamentally about managing complexity and
+        trade-offs. Transitioning from high-level Java to low-level C++ with industry-standard build systems gave me the
+        hands-on architectural experience, discipline, and tooling literacy needed as I transition into the professional
+        software engineering landscape.</p>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-<script src="./app.js"></script>
-<script src="./app.js"></script>
+      <hr>
+      <div class="citations-container">
+        <h2 class="centercontent">References</h2>
+        <ul style="list-style-type: none; padding-left: 0;">
+
+          <!-- nlohmann/json Citation -->
+          <li style="margin-bottom: 1.5em; text-indent: -2em; padding-left: 2em;">
+            <span class="author">Lohmann, N.</span>
+            (<span class="year">2026</span>).
+            <span class="title" style="font-style: italic;">JSON for Modern C++</span>
+            (Version 3.11.3) [Computer software].
+            <span class="publisher">GitHub</span>.
+            <a href="https://github.com/nlohmann/json" target="_blank"
+              rel="noopener noreferrer">https://github.com/nlohmann/json</a>
+          </li>
+
+          <!-- libcpr/cpr Citation -->
+          <li style="margin-bottom: 1.5em; text-indent: -2em; padding-left: 2em;">
+            <span class="author">Sauter, F., &amp; Traub, K.</span>
+            (<span class="year">2026</span>).
+            <span class="title" style="font-style: italic;">C++ Requests: Curl for People</span>
+            (Version 1.11.1) [Computer software].
+            <span class="publisher">GitHub</span>.
+            <a href="https://github.com/libcpr/cpr" target="_blank"
+              rel="noopener noreferrer">https://github.com/libcpr/cpr</a>
+          </li>
+
+        </ul>
+      </div>
+
+      </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="./app.js"></script>
+  <script src="./app.js"></script>
 </body>
 
 </html>
