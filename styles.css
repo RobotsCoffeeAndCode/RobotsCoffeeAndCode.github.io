@@ -7,6 +7,10 @@
   --text-muted: #94a3b8;
 }
 
+.citations-container{
+  margin: 3rem;
+}
+
 code {
   margin: 0;
   padding: 0;
