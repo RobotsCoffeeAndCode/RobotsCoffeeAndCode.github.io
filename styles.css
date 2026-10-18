@@ -11,6 +11,12 @@
   margin: 3rem;
 }
 
+main {
+  box-sizing: border-box;
+  max-width: 80vw;
+  margin-inline: auto;
+}
+
 code {
   margin: 0;
   padding: 0;
