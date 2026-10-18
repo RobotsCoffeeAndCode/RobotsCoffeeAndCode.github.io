@@ -40,8 +40,8 @@
     <section id="intro" class="tab-panel">
       <h2 class="centercontent">Professional Self Assessment</h2>
       <div class="centercontent">
-        <p class="nospace"> All the files for my final code submission are located in this <a
-            href="https://github.com/RobotsCoffeeAndCode/CS_499" target="_blank">repository</a> feel free to review them
+        <p class="nospace"> All the files for my final code submission are located in this <a class="tradlink"
+            href="https://github.com/RobotsCoffeeAndCode/CS_499" target="_blank">Repository</a> feel free to review them
           as I walk you through my project experience.</p>
       </div>
       <hr>
@@ -100,8 +100,9 @@
         and my strategy for enhancing it in the following sections. While not everything I mentioned in this initial
         investigation was implemented, all the ideas have been explored and I may still be working on them today.</p>
       <div class="centercontent">
-        <p class="nospace">Here is a link to the <a href="https://github.com/RobotsCoffeeAndCode/IT145-Project-II"
-            target="_blank">Java project files</a>, should you feel inclined to review the code yourself</p>
+        <p class="nospace">Here is a link to the <a class="tradlink"
+            href="https://github.com/RobotsCoffeeAndCode/IT145-Project-II" target="_blank">Java project files</a>,
+          should you feel inclined to review the code yourself</p>
       </div>
       <hr>
       <p class="nospace">The first section I want to highlight, mentioned in the code review, is my failure to leverage
@@ -109,32 +110,32 @@
         having to write logic in my main() driver as such:</p>
       <pre>
           <code class="language-java">
-                      // Used to seed initial data
-                      initializeDogList();
-                      initializeMonkeyList();
+// Used to seed initial data
+initializeDogList();
+initializeMonkeyList();
           </code>
         </pre>
       <p class="nospace">or</p>
       <pre>
           <code class="language-java">
-                      switch(user_input_as_num){
+switch(user_input_as_num){
 
-                      // Two different options to add animals to the inventory
-                      		case 1:
-                      			intakeNewDog(io);
-                      			break;
-                      						
-                      		case 2:
-                      			intakeNewMonkey(io);
-                      			break;
+// Two different options to add animals to the inventory
+case 1:
+intakeNewDog(io);
+break;
+	
+case 2:
+intakeNewMonkey(io);
+break;
           </code>
       </pre>
       <p class="nospace">or</p>
       <pre>
         <code class="language-java">
-          	          // Separate list of Dogs and list of Monkeys
-	                  private static ArrayList<Dog> dogList = new ArrayList<Dog>();
-                      private static ArrayList<Monkey> monkeyList = new ArrayList<Monkey>();
+// Separate list of Dogs and list of Monkeys
+private static ArrayList<Dog> dogList = new ArrayList<Dog>();
+private static ArrayList<Monkey> monkeyList = new ArrayList<Monkey>();
         </code>
       </pre>
       <p class="nospace">There should be no need to refer to each animal type if polymorphism is leveraged properly</p>
@@ -143,17 +144,17 @@
         representations of the data in my RescueAnimal class</p>
       <pre>
           <code class="language-java">
-                      // Instance variables
-                      private String name;
-                      private String animalType;
-                      private String gender;
-                      private String age;
-                      private String weight;
-                      private String acquisitionDate;
-                      private String acquisitionCountry;
-                      private String trainingStatus;
-                      private boolean reserved;
-                      private String inServiceCountry;
+// Instance variables
+private String name;
+private String animalType;
+private String gender;
+private String age;
+private String weight;
+private String acquisitionDate;
+private String acquisitionCountry;
+private String trainingStatus;
+private boolean reserved;
+private String inServiceCountry;
           </code>
       </pre>
       <br>
@@ -201,11 +202,91 @@
 
       <hr>
 
+      <p class="nospace">Here are some of my new design decisions. First, I created the intakeNewAnimal() function which the user calls
+        upon selecting the main menu option to intake a new animal.</p>
       <pre>
         <code class="language-cpp">
-        Snippets here!
+// Routes animal intake to Dog or Monkey routines based on user selection
+void intakeNewAnimal(std::vector<std::unique_ptr<RescueAnimal>> &animalList, const auth::SupabaseClient &client) {
+  while (true) {
+    const std::string choice =
+        promptForString("Enter animal type to intake (\"dog\" or \"monkey\"), "
+                        "or 'q' to return:");
+
+    if (stringCompare(choice, "q")) {
+      return;
+    }
+
+    if (stringCompare(choice, "dog")) {
+      intakeNewDog(animalList, client);
+      return;
+    }
+    if (stringCompare(choice, "monkey")) {
+      intakeNewMonkey(animalList, client);
+      return;
+    }
+
+    std::cout << "Unsupported species. Please select 'dog' or 'monkey'.\n";
+  }
+}
         </code>
       </pre>
+      <p class="nospace"> Before there were two main menu options, one for each
+        animal type. This was bad design because it coupled the number of animal types with the main menu. A change in the
+        number of animal types directly required changing the main menu. Now you simply can extend this function with the 
+        ability to intake a new animal type, and the main menu remains untouched.
+      </p>
+      <p class="nospace">Second, I added RescueAnimal types that reflect the real world and are much more suited to database operations.
+        I also added enums for types that have a limited number of options.
+      </p>
+      <pre>
+        <code class="language-cpp">
+// Allowed animal biological genders
+enum class Gender : std::uint8_t {
+  Unknown,
+  Female,
+  Male
+};
+
+// Lifecycle training phases for a rescue animal
+enum class TrainingStatus : std::uint8_t {
+  Intake,
+  InTraining,
+  PhaseI,
+  PhaseII,
+  PhaseIII,
+  InService,
+  Retired
+};
+
+class RescueAnimal {
+private:
+  std::string name_;
+  Gender gender_{Gender::Unknown};
+  std::chrono::year_month_day birthDate_{};
+  double weightKg_{0.0};
+  std::chrono::year_month_day acquisitionDate_{};
+  std::string acquisitionContinent_;
+  TrainingStatus trainingStatus_{TrainingStatus::Intake};
+  bool reserved_{false};
+  std::optional<std::string> inServiceContinent_{std::nullopt};
+  ...
+        </code>
+      </pre>
+      <p class="nospace">With the addition of enhancement 3 I also added a serializeSubclassFields() function that takes in a json payload.
+        Its purpose is to serialize unique fields (such as the dog specific breed field) thus making forming the request to add
+        a new animal to the database straightforward. However, this also means that this function must be overidden for each new
+        animal type added.
+      </p>
+      <pre>
+        <code class="language-cpp">
+// Derived classes implement this to write their unique fields into the JSON
+// payload. This removes dynamic casts in database storage functions.
+virtual void serializeSubclassFields(nlohmann::json &payload) const = 0;
+        </code>
+      </pre>
+    <p class="nospace">There were many more design decisions with tradeoffs made that you can view in my codebase, but these directly cover how
+      I enhanced what I originally described in my code review video. </p>
     </section>
 
     <section id="enhancement-2" class="tab-panel">
@@ -245,62 +326,293 @@
         sink.</p>
 
       <hr>
+      <p class="nospace">This is the encoding scheme of my simple graph (continents to ints)</p>
       <pre>
         <code class="language-cpp">
-        Snippets here!
+// Single instance of continent names and their stable integer graph indices
+// (before I had multiple, bad DRY practice)
+inline constexpr std::array<std::string_view, 7> kValidContinents{
+    "Africa",        // 0
+    "Antarctica",    // 1
+    "Asia",          // 2
+    "Australia",     // 3
+    "Europe",        // 4
+    "North America", // 5
+    "South America"  // 6
+};</code>
+      </pre>
+      <p class="nospace">and here is the function that actually builds the graph representation</p>
+      <pre>
+        <code class="language-cpp">
+// Builds the bi-directional weighted continent graph network
+[[nodiscard]] auto generateContinentGraph() -> graph::ContinentGraph {
+  graph::ContinentGraph graph(RescueUtils::kValidContinents.size());
+
+  // Edge weights based on $0.18/mile between geographical center points
+  graph.addEdge(0, 1, 1200); // Africa <-> Antarctica
+  graph.addEdge(0, 2, 930);  // Africa <-> Asia
+  graph.addEdge(0, 3, 1400); // Africa <-> Australia
+  graph.addEdge(0, 4, 650);  // Africa <-> Europe
+
+  graph.addEdge(1, 3, 800); // Antarctica <-> Australia
+  graph.addEdge(1, 6, 900); // Antarctica <-> South America
+
+  graph.addEdge(2, 3, 1000); // Asia <-> Australia
+  graph.addEdge(2, 4, 500);  // Asia <-> Europe
+  graph.addEdge(2, 5, 1100); // Asia <-> North America
+
+  graph.addEdge(3, 5, 1600); // Australia <-> North America
+  graph.addEdge(3, 6, 1700); // Australia <-> South America
+
+  graph.addEdge(4, 5, 840); // Europe <-> North America
+
+  graph.addEdge(5, 6, 930); // North America <-> South America
+
+  return graph;
+}
         </code>
       </pre>
+      <p class="nospace">Here is the object in which I store my Dijkstra's Result</p>
+      <pre>
+        <code class="language-cpp">
+// Holds shortest paths, predecessor tracks, and the source vertex
+struct DijkstraResult {
+  static constexpr int infinity = std::numeric_limits<int>::max();
+  static constexpr std::size_t kInvalidVertex = std::numeric_limits<std::size_t>::max();
 
+  std::vector<int> distances;
+  std::vector<std::size_t> predecessors;
+  std::size_t source{0};
+
+  // Reconstructs the shortest path sequence from source to target
+  [[nodiscard]] std::optional<std::vector<std::size_t>>
+  getPathTo(std::size_t target) const;
+};
+        </code>
+      </pre>
+      <p class="nospace"> and this is my implementation of Dijkstra's</p>
+      <pre>
+        <code class="language-cpp">
+// Implementation of Dijkstra's Algorithm, takes a graph and source vertex
+// returns a DijkstraResult with costs to navigate to other nodes from source
+DijkstraResult dijkstra(const ContinentGraph &graph, std::size_t startVertex) {
+  const std::size_t vertexCount = graph.getVertexCount();
+  if (startVertex >= vertexCount) {
+    throw std::out_of_range("Start vertex index out of bounds.");
+  }
+
+  std::vector<int> distances(vertexCount, DijkstraResult::infinity);
+  std::vector<std::size_t> predecessors(vertexCount, DijkstraResult::kInvalidVertex);
+
+  // Min-heap ordered by smallest distance first
+  std::priority_queue<QueueNode, std::vector<QueueNode>, std::greater<QueueNode>> prioq;
+
+  distances[startVertex] = 0;
+  prioq.push(QueueNode{.distance = 0, .vertex = startVertex});
+
+  while (!prioq.empty()) {
+    const auto [currentDist, u] = prioq.top();
+    prioq.pop();
+
+    // Skip processing if a shorter path to u has already been finalized
+    if (currentDist > distances[u]) {
+      continue;
+    }
+
+    for (const Edge &edge : graph.getNeighbors(u)) {
+      if (edge.weight < 0) {
+        throw std::invalid_argument("Dijkstra does not support negative weights.");
+      }
+
+      // Safe relaxation check preventing signed integer overflow
+      if (distances[u] != DijkstraResult::infinity &&
+          distances[u] + edge.weight < distances[edge.to]) {
+        distances[edge.to] = distances[u] + edge.weight;
+        predecessors[edge.to] = u;
+        prioq.push(QueueNode{.distance = distances[edge.to], .vertex = edge.to});
+      }
+    }
+  }
+
+  return DijkstraResult{.distances = std::move(distances),
+                        .predecessors = std::move(predecessors),
+                        .source = startVertex};
+}
+        </code>
+      </pre>
+      <p class="nospace">The algorithm is used in my program as such</p>
+      <pre>
+        <code class="language-cpp">
+auto pathResult = graph::dijkstra(graph, *startIdx);
+int cost = pathResult.distances[*endIdx];
+        </code>
+      </pre>
     </section>
 
+        
     <section id="enhancement-3" class="tab-panel">
       <h2 class="centercontent">Database Integration</h2>
-<p>As with my previous enhancements, I significantly underestimated the scope of this work. I initially thought
-  that Supabase offered a native C++ integration and that my life was going to be a bit easier. Yet upon scouring their
-  documentation, I failed to find any. As a result, I relied on two additional
-  third-party libraries to create a client for making HTTP requests to the Supabase API. The first, <a href="https://github.com/nlohmann/json" target="_blank">nlohmann</a>, is a header-only library that provides a C++ JSON class. I used this class to parse JSON responses
-  and construct payloads for sending to the API when retrieving or saving local instances of user data. The
-  second, <a href="https://github.com/libcpr/cpr" target="_blank">CPR</a> (C++ Requests), is a library built on cURL and libcurl that provides a simplified interface for
-  making basic HTTP requests, among other capabilities. This was its primary use in my project.</p>
+      <p>As with my previous enhancements, I significantly underestimated the scope of this work. I initially thought
+        that Supabase offered a native C++ integration and that my life was going to be a bit easier. Yet upon scouring
+        their
+        documentation, I failed to find any. As a result, I relied on two additional
+        third-party libraries to create a client for making HTTP requests to the Supabase API. The first, <a
+          href="https://github.com/nlohmann/json" target="_blank">nlohmann</a>, is a header-only library that provides a
+        C++ JSON class. I used this class to parse JSON responses
+        and construct payloads for sending to the API when retrieving or saving local instances of user data. The
+        second, <a href="https://github.com/libcpr/cpr" target="_blank">CPR</a> (C++ Requests), is a library built on
+        cURL and libcurl that provides a simplified interface for
+        making basic HTTP requests, among other capabilities. This was its primary use in my project.</p>
 
-<p>In addition to implementing this HTTP client, I created a basic login screen and a test user account with
-  pre-populated data. I removed the initializeDog() and initializeMonkey() functions from main.cpp, as all seeded
-  data is now stored in this account. When the application opens, users are prompted to sign in or create an
-  account. Users are welcome to create their own accounts to explore the application. Usernames must be in email
-  format, although they do not need to correspond to valid email addresses because email verification has been
-  disabled for the purposes of this project. To access the test account, use “admin” as the email and “test” as
-  the password. Any changes made to the animals associated with the test account will persist in the database.
-  This can be verified by closing the application and signing in again.</p>
+      <p>In addition to implementing this HTTP client, I created a basic login screen and a test user account with
+        pre-populated data. I removed the initializeDog() and initializeMonkey() functions from main.cpp, as all seeded
+        data is now stored in this account. When the application opens, users are prompted to sign in or create an
+        account. Users are welcome to create their own accounts to explore the application. Usernames must be in email
+        format, although they do not need to correspond to valid email addresses because email verification has been
+        disabled for the purposes of this project. To access the test account, use “admin” as the email and “test” as
+        the password. Any changes made to the animals associated with the test account will persist in the database.
+        This can be verified by closing the application and signing in again.</p>
 
-<p>In addition to integration of the database functionality, I refactored a substantial portion of the code. I had repeatedly
-  violated the DRY (Don’t Repeat Yourself) principle in the previous enhancement, so I worked to address this
-  issue. Along with removing duplicated logic, I simplified several functions in main.cpp in response to feedback
-  from clang-tidy. In particular, I divided reserveAnimal() into three smaller functions, separating its original
-  responsibilities into more manageable parts. I then gave the same treatment to my printAnimals() function, splitting how
-  it handles filters from the actual printing to stdout. I also consolidated several enum and encoded representations.
-  Specifically, RescueUtils.hpp now contains only the continent graph encoding, alongside the sole representation of
-  valid monkey species.</p>
-  
-  <hr>
-  <pre>
-          <code class="language-cpp">
-          Snippets here!
-          </code>
-        </pre>
-  </section>
-  
-  <section id="conclusion" class="tab-panel">
-    <h2 class="centercontent">Conclusion &amp; Future Work</h2>
-    <p>Reflections on technical growth and planned extensions.</p>
-    <hr>
-    <p>References and professional work attribution to be added here...</p>
-  </section>
+      <p>In addition to integration of the database functionality, I refactored a substantial portion of the code. I had
+        repeatedly
+        violated the DRY (Don’t Repeat Yourself) principle in the previous enhancement, so I worked to address this
+        issue. Along with removing duplicated logic, I simplified several functions in main.cpp in response to feedback
+        from clang-tidy. In particular, I divided reserveAnimal() into three smaller functions, separating its original
+        responsibilities into more manageable parts. I then gave the same treatment to my printAnimals() function,
+        splitting how
+        it handles filters from the actual printing to stdout. I also consolidated several enum and encoded
+        representations.
+        Specifically, RescueUtils.hpp now contains only the continent graph encoding, alongside the sole representation
+        of
+        valid monkey species.</p>
+
+      <hr>
+      <p class="nospace">Here is the header file for my supabase client</p>
+      <pre>
+        <code class="language-cpp">
+Other includes above here
+...          
+
+#include "RescueAnimal.hpp"
+
+namespace auth {
+
+// Holds authentication tokens and user identification details
+struct UserSession {
+  std::string accessToken;
+  std::string refreshToken;
+  std::string userId;
+  std::string email;
+};
+
+// Manages remote REST calls to Supabase API for authentication and animal record persistence
+class SupabaseClient {
+private:
+  std::string projectUrl_;
+  std::string anonKey_;
+  std::optional<UserSession> currentSession_;
+
+public:
+  SupabaseClient(std::string projectUrl, std::string anonKey);
+
+  // Signs a user into the supabase db instance
+  [[nodiscard]] bool signIn(const std::string &email, const std::string &password);
+
+  // Registers a user using an email (MUST BE IN EMAIL FORMAT XXX@XXX.XXX etc.)
+  // and a given password into the supabase db instance
+  [[nodiscard]] bool signUp(const std::string &email, const std::string &password);
+
+  // Signs a user out (changes session status) 
+  void signOut() noexcept;
+
+  // Checks if a user is authenticated (error handling)
+  [[nodiscard]] bool isAuthenticated() const noexcept;
+
+  // Returns the clients session status
+  [[nodiscard]] const std::optional<UserSession> &getSession() const noexcept;
+
+  // Fetches animal records created by the authenticated user
+  [[nodiscard]] std::vector<std::unique_ptr<RescueAnimal>> fetchAnimals() const;
+
+  // Adds (saves) an animal record to the database
+  [[nodiscard]] bool saveAnimal(const RescueAnimal &animal) const;
+
+  // Updates reservation flag in the database for a named animal
+  [[nodiscard]] bool updateAnimalReservation(const std::string &animalName, bool reserved) const;
+
+  // Updates current service continent in the database for a named animal
+  [[nodiscard]] bool updateAnimalLocation(const std::string &animalName,
+                                          const std::optional<std::string> &continent) const;
+};
+
+} // namespace auth
+        </code>
+      </pre>
+      <p class="nospace">The key implementation detail here is to have this guard clause be the very first thing in my program
+        as it ensures that nothing can happen before a user has a valid supabase client.
+      </p>
+      <pre>
+        <code class="language-cpp">
+auth::SupabaseClient client(supabaseUrl, supabaseAnonKey);
+if (!handleUserLogin(client)) {
+    std::cout << "Exiting application.\n";
+    return 0;
+}
+        </code>
+      </pre>
+      <p class="nospace">Here is an example of using the supabase client to save a newly added RescueAnimal to the database</p>
+      <pre>
+        <code class="language-cpp">
+if (client.saveAnimal(*newDog)) {
+  std::cout << common->name << " has been saved to the database.\n";
+  animalList.push_back(std::move(newDog));
+} else {
+  std::cout << "Error: Failed to save " << common->name
+            << " to the database.\n";
+}
+        </code>
+      </pre>
+      <p class="nospace">Last but not least, here is where that earlier serialize function comes into play. As it appends the
+       unqiue animal type fields to our payload before we send the http request to the supabase API.
+      </p>
+      <pre>
+        <code class="language-cpp">
+// Build the common payload fields
+  json payload = {
+      {"user_id", currentSession_->userId},
+      {"name", animal.getName()},
+      {"animal_type", std::string(animal.getAnimalType())},
+      {"gender", std::string(animal.getGender())},
+      {"birth_date", formatDate(animal.getBirthDate())},
+      {"acquisition_date", formatDate(animal.getAcquisitionDate())},
+      {"weight_kg", animal.getWeightKg()},
+      {"acquisition_continent", animal.getAcquisitionContinent()},
+      {"training_status", std::string(animal.getTrainingStatus())},
+      {"reserved", animal.isReserved()},
+      {"in_service_continent",
+       animal.getInServiceContinent().has_value()
+           ? json(*animal.getInServiceContinent())
+           : json(nullptr)}};
+
+  // Polymorphism, animal appends its own subclass-specific fields
+  // no need to add a switch on each animal sub-class!
+  animal.serializeSubclassFields(payload);
+        </code>
+      </pre>
+    </section>
+
+    <section id="conclusion" class="tab-panel">
+      <h2 class="centercontent">Conclusion &amp; Future Work</h2>
+      <p>Reflections on technical growth and planned extensions.</p>
+      <hr>
+      <p>References and professional work attribution to be added here...</p>
+    </section>
   </main>
-  
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
   <script src="./app.js"></script>
   <script src="./app.js"></script>
-  </body>
-  
-  </html>
+</body>
+
+</html>

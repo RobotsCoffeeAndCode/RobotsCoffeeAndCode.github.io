@@ -7,6 +7,24 @@
   --text-muted: #94a3b8;
 }
 
+code {
+  margin: 0;
+  padding: 0;
+}
+
+pre {
+  margin: 0;
+  padding: 0;
+}
+
+.tradlink:link {
+  color: #4141fc;
+}
+
+.tradlink:visited {
+  color: #cc4cf3;
+}
+
 p {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1.1rem;
